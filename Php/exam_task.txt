@@ -1,0 +1,101 @@
+Задание на экзамен по Php
+
+Тема – система планирования задач для сотрудников, которая позволяет создавать задачи с описаниями,
+ привязанные к сотрудникам. 
+
+Обязательно использование следующих возможностей:
+
+Использование сессий при входе на сайт
+Использование БД (пользователи, задачи)
+Возможность пользователей просматривать и завершать свои задачи
+Наличие (ЧУЖОГО) профессионально выполненного шаблона сайта (!)
+Использование ООП хотя бы в каких-то целях на сайте
+
+Наличие админской части сайта:
+регистрация и удаление сотрудников
+просмотр всех задач (CRUD для задач)
+
+Поля таблицы Tasks:
+task_id
+title (Название задачи)
+start_date (Дата начала)
+end_date (Плановая дата окончания)
+status (Статус задачи (выполнена/не выполнена))
+
+
+CREATE DATABASE IF NOT EXISTS task_management;
+
+USE task_management;
+
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL, 
+    role VARCHAR(50) NOT NULL DEFAULT 'junior' 
+);
+
+Insert into users (user_id ,username,password, role) values (1,'Alex123','Qwe_123','senior');
+Insert into users (user_id ,username,password, role) values (2,'Roma89','Qwe_123','teamlead');
+Insert into users (user_id ,username,password, role) values (3,'Anna18','Qwe_123','middle');
+Insert into users (user_id ,username,password, role) values (4,'Alexa','Qwe_123','junior');
+Insert into users (user_id ,username,password, role) values (5,'Nick98','Qwe_123','middle');
+Insert into users (user_id ,username,password, role) values (6,'SannyaBos','Qwe_123','tester');
+
+CREATE TABLE IF NOT EXISTS tasks (
+    task_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    title VARCHAR(255) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status ENUM('pending', 'completed') DEFAULT 'pending',
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (1, 1,'application architecture development','23-11-9','24-1-19', 'pending');
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (2, 6,'testing ui menu login','23-11-17','23-12-29', 'pending');
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (3, 5,'website frontend development','23-11-9','24-1-15', 'pending');
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (4, 4,'ui menu login','23-11-19','23-12-19', 'pending');
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (5, 3,'website backend development','23-11-9','24-1-10', 'pending');
+Insert into tasks (task_id, user_id ,title, start_date, end_date, status) values (6, 6,'payment form testing','23-11-29','23-12-10', 'completed');
+
+C:\xampp\mysql\bin>mysql -uroot
+show databases;
+
+<!--  if (isset($_SESSION["UserName"], $_SESSION["Password"], $_SESSION["Role"])) {
+    $userName = $_SESSION["UserName"];
+    $password = $_SESSION["Password"];
+    $role = $_SESSION["Role"];
+
+    echo "Вы вошли в систему как: " . $role . " " . $userName;
+    echo '<br><br>';
+
+    if ($role == "teamlead" || $role == "senior") {
+        ?>
+        <form method="get" action="admin_users.php">
+            <h3>Админская панель</h3>
+            <label>Управление персоналом</label>
+            <input type="submit" value="Перейти к управлению">
+        </form>
+
+        <form method="get" action="admin_task.php">
+            <label>Управление задачами</label>
+            <input type="submit" value="Перейти к управлению">
+        </form>
+        <?php } else { ?>
+        <form method="get" action="user_task.php">
+            <h3>Панель пользователя</h3>
+            <label>Управление своими задачами</label>
+            <input type="submit" value="Перейти к управлению">
+        </form>
+    <?php }
+} else {
+    echo 'Сотрудник не зарегистрирован<br>';
+    echo 'Обратитесь к старшему из разработчиков для регистрации<br>';
+    // echo '<a href="Session5.php">Зарегистрироваться<a/>';
+}
+?>
+
+<form method="get" action="enter.php">
+    <label>Выйти в главное Меню</label>
+    <input type="submit" value="Выйти">
+</form> -->
